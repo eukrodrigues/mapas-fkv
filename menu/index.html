@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapas</title>
+</head>
+
+<body>
+    <button onclick="window.location.href='./cadastro.html'">Cadastrar Novo Link</button>
+    <br />
+    <h1>Lista de Mapas</h1>
+    <ul id="lista-links"></ul>
+
+    <script>
+        fetch('../links.txt')
+            .then(response => response.text())
+            .then(text => {
+                let lista = document.getElementById("lista-links");
+                text.split("\n").forEach(linha => {
+                    let [titulo, link] = linha.split("|");
+                    if (titulo && link) {
+                        let li = document.createElement("li");
+                        li.innerHTML = `<a href="${link.trim()}" target="_blank">${titulo.trim()}</a>`;
+                        lista.appendChild(li);
+                    }
+                });
+            })
+            .catch(error => console.error("Erro ao carregar os links:", error));
+    </script>
+</body>
+
+</html>

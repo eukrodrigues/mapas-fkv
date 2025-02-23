@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Cadastro de Novo Mapa</h1>
+    <form id="formLink">
+        <input type="text" id="titulo" placeholder="Título do mapa" required>
+        <input type="text" id="link" placeholder="URL do mapa" required>
+        <button type="submit">Adicionar</button>
+    </form>
+</body>
+<script>
+    document.getElementById("formLink").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let titulo = document.getElementById("titulo").value;
+        let link = document.getElementById("link").value;
+
+        fetch('/.netlify/functions/addLink', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ titulo, link }),
+        })
+            .then(response => response.text())
+            .then(result => alert(result))
+            .catch(error => console.error(error));
+    });
+</script>
+
+</html>
